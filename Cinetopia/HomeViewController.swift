@@ -9,15 +9,11 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    private lazy var label: UILabel = {
-        let label = UILabel()
+    private lazy var logoImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage.logo)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Hello World!"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 24, weight: .bold)
-        
-        return label
+        return imageView
     }()
 
     override func viewDidLoad() {
@@ -30,13 +26,13 @@ class HomeViewController: UIViewController {
     }
     
     private func addSubview() {
-        view.addSubview(label)
+        view.addSubview(logoImageView)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            label.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32)
+            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 64),
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
