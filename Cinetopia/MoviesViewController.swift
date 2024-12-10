@@ -14,7 +14,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath)
-        cell.textLabel?.text = names[indexPath.row]
+        var configuration = cell.defaultContentConfiguration()
+        configuration.text = names[indexPath.row]
+        cell.contentConfiguration = configuration
         return cell
     }
     
