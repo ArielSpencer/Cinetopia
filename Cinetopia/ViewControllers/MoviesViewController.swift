@@ -8,17 +8,13 @@
 import UIKit
 
 class MoviesViewController: UIViewController {
-    var names: [String] = [
-        "Star Wars: A New Hope", "Matrix", "Blade Runner 2049", "Scott Pilgrim vs. The World"
-    ]
-    
     private lazy var tableView: UITableView = {
        let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "nameCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "movieCell")
         return tableView
     }()
 
@@ -65,13 +61,13 @@ class MoviesViewController: UIViewController {
 
 extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return names.count
+        return movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)
         var configuration = cell.defaultContentConfiguration()
-        configuration.text = names[indexPath.row]
+        configuration.text = movies[indexPath.row].title
         configuration.textProperties.color = .white
         cell.contentConfiguration = configuration
         cell.backgroundColor = .clear
