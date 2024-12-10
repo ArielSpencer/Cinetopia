@@ -7,25 +7,7 @@
 
 import UIKit
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return names.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath)
-        var configuration = cell.defaultContentConfiguration()
-        configuration.text = names[indexPath.row]
-        configuration.textProperties.color = .white
-        cell.contentConfiguration = configuration
-        cell.backgroundColor = .clear
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
+class MoviesViewController: UIViewController {
     var names: [String] = [
         "Star Wars: A New Hope", "Matrix", "Blade Runner 2049", "Scott Pilgrim vs. The World"
     ]
@@ -79,4 +61,24 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     */
 
+}
+
+extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return names.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath)
+        var configuration = cell.defaultContentConfiguration()
+        configuration.text = names[indexPath.row]
+        configuration.textProperties.color = .white
+        cell.contentConfiguration = configuration
+        cell.backgroundColor = .clear
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
