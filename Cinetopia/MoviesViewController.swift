@@ -16,7 +16,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath)
         var configuration = cell.defaultContentConfiguration()
         configuration.text = names[indexPath.row]
+        configuration.textProperties.color = .white
         cell.contentConfiguration = configuration
+        cell.backgroundColor = .clear
         return cell
     }
     
