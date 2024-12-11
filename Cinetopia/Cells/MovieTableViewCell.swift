@@ -10,7 +10,7 @@ import UIKit
 class MovieTableViewCell: UITableViewCell {
     
     private lazy var moviePosterImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage.avatar)
+        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 12
@@ -21,7 +21,6 @@ class MovieTableViewCell: UITableViewCell {
     private lazy var movieTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Avatar"
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
         return label
@@ -30,11 +29,16 @@ class MovieTableViewCell: UITableViewCell {
     private lazy var movieReleaseDateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Lançamento: 18/12/2009"
         label.font = .systemFont(ofSize: 18)
         label.textColor = .white.withAlphaComponent(0.75)
         return label
     }()
+    
+    func configureCell(movie: Movie) {
+        movieTitleLabel.text = movie.title
+        moviePosterImageView.image = UIImage(named: movie.image)
+        movieReleaseDateLabel.text = "Lançamento: \(movie.releaseDate)"
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
