@@ -12,8 +12,9 @@ class MovieTableViewCell: UITableViewCell {
     private lazy var moviePosterImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage.avatar)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 12.0
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -21,7 +22,7 @@ class MovieTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Avatar"
-        label.font = .systemFont(ofSize: 20.0, weight: .bold)
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
         return label
     }()
@@ -59,7 +60,7 @@ class MovieTableViewCell: UITableViewCell {
             moviePosterImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             moviePosterImageView.widthAnchor.constraint(equalToConstant: 100),
             
-            movieTitleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            movieTitleLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -16),
             movieTitleLabel.leadingAnchor.constraint(equalTo: moviePosterImageView.trailingAnchor, constant: 16),
             
             movieReleaseDateLabel.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 8),
@@ -78,8 +79,4 @@ class MovieTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-}
-
-#Preview {
-    MovieTableViewCell()
 }
