@@ -57,6 +57,7 @@ class MovieTableViewCell: UITableViewCell {
             moviePosterImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             moviePosterImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             moviePosterImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            moviePosterImageView.widthAnchor.constraint(equalToConstant: 100),
             
             movieTitleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             movieTitleLabel.leadingAnchor.constraint(equalTo: moviePosterImageView.trailingAnchor, constant: 16),
