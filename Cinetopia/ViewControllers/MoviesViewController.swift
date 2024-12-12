@@ -67,6 +67,7 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as? MovieTableViewCell {
             cell.configureCell(movie: movies[indexPath.row])
+            cell.selectionStyle = .none
             return cell
         }
         
