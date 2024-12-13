@@ -37,7 +37,15 @@ class MoviesViewController: UIViewController {
         setupNavigationBar()
         addSubViews()
         setupConstraints()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
         // Do any additional setup after loading the view.
+    }
+    
+    @objc private func hideKeyboard() {
+        searchBar.resignFirstResponder()
     }
     
     private func addSubViews() {
