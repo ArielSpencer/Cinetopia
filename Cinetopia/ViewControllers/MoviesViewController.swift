@@ -17,6 +17,14 @@ class MoviesViewController: UIViewController {
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "movieCell")
         return tableView
     }()
+    
+    private lazy var searchBar: UISearchBar = {
+       let searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.placeholder = "Pesquisar"
+        searchBar.searchTextField.backgroundColor = .white
+        return searchBar
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +53,7 @@ class MoviesViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.setHidesBackButton(true, animated: true)
+        navigationItem.titleView = searchBar
     }
 
     /*
