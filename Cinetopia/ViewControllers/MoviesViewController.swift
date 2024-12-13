@@ -8,6 +8,10 @@
 import UIKit
 
 class MoviesViewController: UIViewController {
+    
+    private var filteredMovies: [Movie] = []
+    private var isSearchActive: Bool = false
+    
     private lazy var tableView: UITableView = {
        let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,12 +75,13 @@ class MoviesViewController: UIViewController {
 
 extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return isSearchActive ? filteredMovies.count : movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as? MovieTableViewCell {
-            cell.configureCell(movie: movies[indexPath.row])
+            let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
+            cell.configureCell(movie: movie)
             cell.selectionStyle = .none
             return cell
         }
@@ -86,7 +91,8 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let detailsVC = MovieDetailsViewController(movie: movies[indexPath.row])
+        let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
+        let detailsVC = MovieDetailsViewController(movie: movie)
         navigationController?.pushViewController(detailsVC, animated: true)
     }
     
@@ -97,6 +103,14 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension MoviesViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        if searchText.isEmpty {
+            isSearchActive = false
+        } else {
+            isSearchActive = true
+            filteredMovies = movies.filter({ movie in
+                movie.title.lowercased().contains(searchText.lowercased())
+            })
+        }
+        tableView.reloadData()
     }
 }
