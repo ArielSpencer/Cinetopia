@@ -52,7 +52,8 @@ class MoviesViewController: UIViewController {
     }
     
     private func fetchMovies() {
-        movieService.getMovies()
+        let movies = movieService.getMovies()
+        print(movies)
     }
     
     private func addSubViews() {
