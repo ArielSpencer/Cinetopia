@@ -12,6 +12,8 @@ class MoviesViewController: UIViewController {
     private var filteredMovies: [Movie] = []
     private var isSearchActive: Bool = false
     
+    private let movieService: MovieService = MovieService()
+    
     private lazy var tableView: UITableView = {
        let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,6 +39,7 @@ class MoviesViewController: UIViewController {
         setupNavigationBar()
         addSubViews()
         setupConstraints()
+        fetchMovies()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -46,6 +49,10 @@ class MoviesViewController: UIViewController {
     
     @objc private func hideKeyboard() {
         searchBar.resignFirstResponder()
+    }
+    
+    private func fetchMovies() {
+        movieService.getMovies()
     }
     
     private func addSubViews() {
