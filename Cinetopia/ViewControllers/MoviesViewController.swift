@@ -40,7 +40,9 @@ class MoviesViewController: UIViewController {
         setupNavigationBar()
         addSubViews()
         setupConstraints()
-        fetchMovies()
+        Task {
+            await fetchMovies()
+        }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -52,18 +54,12 @@ class MoviesViewController: UIViewController {
         searchBar.resignFirstResponder()
     }
     
-    private func fetchMovies() {
-        movieService.getMovies{ result in
-            
-            switch result {
-            case . success(let movies):
-                DispatchQueue.main.async {
-                    self.movies = movies
-                    self.tableView.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
+    private func fetchMovies() async {
+        do {
+            movies = try await movieService.getMovies()
+            tableView.reloadData()
+        } catch (let error) {
+            print(error)
         }
     }
     
