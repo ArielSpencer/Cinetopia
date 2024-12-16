@@ -53,13 +53,18 @@ class MoviesViewController: UIViewController {
     }
     
     private func fetchMovies() {
-        movieService.getMovies(completion: { movies in
-            guard let movies else { return }
-            DispatchQueue.main.async {
-                self.movies = movies
-                self.tableView.reloadData()
+        movieService.getMovies{ result in
+            
+            switch result {
+            case . success(let movies):
+                DispatchQueue.main.async {
+                    self.movies = movies
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
             }
-        })
+        }
     }
     
     private func addSubViews() {
