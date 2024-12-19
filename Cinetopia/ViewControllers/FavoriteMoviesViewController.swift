@@ -17,6 +17,8 @@ class FavoriteMoviesViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(FavoriteMovieCollectionViewCell.self, forCellWithReuseIdentifier: "FavoriteMovieCollectionViewCell")
+        collectionView.dataSource = self
         return collectionView
     }()
     
@@ -37,6 +39,28 @@ class FavoriteMoviesViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+}
+
+extension FavoriteMoviesViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section:
+                        Int) -> Int {
+        return movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
+                        IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
+                                                                "FavoriteMovieCollectionViewCell", for: indexPath) as?
+                FavoriteMovieCollectionViewCell else {
+            fatalError("error to create FavoriteMovieCollectionViewCell")
+        }
+        
+        let currentMovie = movies [indexPath.item]
+        cell.setupView(currentMovie)
+        
+        return cell
     }
 }
 
