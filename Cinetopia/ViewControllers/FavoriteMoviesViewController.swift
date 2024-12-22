@@ -50,7 +50,7 @@ extension FavoriteMoviesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section:
                         Int) -> Int {
-        return movies.count
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
@@ -59,8 +59,8 @@ extension FavoriteMoviesViewController: UICollectionViewDataSource {
             fatalError("error to create FavoriteMovieCollectionViewCell")
         }
         
-        let currentMovie = movies [indexPath.item]
-        cell.setupView(currentMovie)
+//        let currentMovie = movies [indexPath.item]
+//        cell.setupView(currentMovie)
         
         return cell
     }
