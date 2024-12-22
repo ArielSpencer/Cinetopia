@@ -49,6 +49,8 @@ class MovieTableViewCell: UITableViewCell {
         return button
     }()
     
+    weak var delegate: MovieTableViewCellDelegate?
+    
     func configureCell(movie: Movie) {
         movieTitleLabel.text = movie.title
         let url = URL(string: movie.image)
@@ -119,8 +121,8 @@ class MovieTableViewCell: UITableViewCell {
     // MARK: - Actions
     
     @objc
-    func didTapFavoriteButton(senders: UIButton) {
-        print("did tap favorite button")
+    func didTapFavoriteButton(sender: UIButton) {
+        delegate?.didSelectFavoriteButton(sender: sender)
     }
     
 }
