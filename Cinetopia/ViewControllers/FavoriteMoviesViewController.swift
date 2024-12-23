@@ -66,6 +66,7 @@ extension FavoriteMoviesViewController: UICollectionViewDataSource {
         
         let currentMovie = MovieManager.shared.favoriteMovies[indexPath.item]
         cell.setupView(currentMovie)
+        cell.delegate = self
         
         return cell
     }
@@ -92,6 +93,12 @@ extension FavoriteMoviesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 50)
+    }
+}
+
+extension FavoriteMoviesViewController: FavoriteMovieCollectionViewCellDelegate {
+    func didSelectFavoriteButton(_ sender: UIButton) {
+        print("did tap favorite button in viewcontroller")
     }
 }
 
