@@ -7,6 +7,14 @@
 
 import UIKit
 
+protocol MoviesViewProtocol: AnyObject {
+    func setupView(with movies: [Movie])
+    func reloadData()
+    func navigateMovieDetail(with movie: Movie)
+    func reloadRow(at indexPath: IndexPath)
+    func toggle(_ isActive: Bool)
+}
+
 class MoviesView: UIView {
     
     // MARK: - Attributes
@@ -113,4 +121,28 @@ extension MoviesView: MovieTableViewCellDelegate {
         
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
+}
+
+extension MoviesView: MoviesViewProtocol {
+    func setupView(with movies: [Movie]) {
+        self.movies = movies
+    }
+    
+    func reloadData() {
+        tableView.reloadData()
+    }
+    
+    func navigateMovieDetail(with movie: Movie) {
+
+    }
+    
+    func reloadRow(at indexPath: IndexPath) {
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    func toggle(_ isActive: Bool) {
+        self.isSearchActive = isActive
+    }
+    
+    
 }
