@@ -27,12 +27,12 @@ class MoviesView: UIView {
         return tableView
     }()
     
-    private lazy var searchBar: UISearchBar = {
+    private(set) lazy var searchBar: UISearchBar = {
        let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.placeholder = "Pesquisar"
         searchBar.searchTextField.backgroundColor = .white
-        searchBar.delegate = self
+//        searchBar.delegate = self
         return searchBar
     }()
     
@@ -40,6 +40,9 @@ class MoviesView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .background
+        addSubViews()
+        setupConstraints()
         
     }
     
@@ -85,10 +88,29 @@ extension MoviesView: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
         let detailsVC = MovieDetailsViewController(movie: movie)
-        navigationController?.pushViewController(detailsVC, animated: true)
+//        navigationController?.pushViewController(detailsVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 160
+    }
+}
+
+extension MoviesView: MovieTableViewCellDelegate {
+    func didSelectFavoriteButton(sender: UIButton) {
+        guard let cell = sender.superview?.superview as? MovieTableViewCell else {
+            return
+        }
+        
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        
+        let selectedMovie = movies[indexPath.row]
+        selectedMovie.changeSelectionStatus()
+        
+        MovieManager.shared.add(selectedMovie)
+        
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

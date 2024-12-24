@@ -10,13 +10,19 @@ import UIKit
 class MoviesViewController: UIViewController {
     
     private let movieService: MovieService = MovieService()
+    
+    private lazy var mainView: MoviesView = {
+        let mainView = MoviesView()
+        return mainView
+    }()
+    
+    override func loadView() {
+        view = mainView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .background
         setupNavigationBar()
-        addSubViews()
-        setupConstraints()
         Task {
             await fetchMovies()
         }
@@ -37,7 +43,7 @@ class MoviesViewController: UIViewController {
     
     private func fetchMovies() async {
         do {
-            movies = try await movieService.getMovies()
+            let movies = try await movieService.getMovies()
             tableView.reloadData()
         } catch (let error) {
             print(error)
@@ -49,7 +55,7 @@ class MoviesViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.setHidesBackButton(true, animated: true)
-        navigationItem.titleView = searchBar
+        navigationItem.titleView = mainView.searchBar
     }
 
     /*
@@ -66,33 +72,14 @@ class MoviesViewController: UIViewController {
 
 extension MoviesViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            isSearchActive = false
-        } else {
-            isSearchActive = true
-            filteredMovies = movies.filter({ movie in
-                movie.title.lowercased().contains(searchText.lowercased())
-            })
-        }
-        tableView.reloadData()
-    }
-}
-
-extension MoviesViewController: MovieTableViewCellDelegate {
-    func didSelectFavoriteButton(sender: UIButton) {
-        guard let cell = sender.superview?.superview as? MovieTableViewCell else {
-            return
-        }
-        
-        guard let indexPath = tableView.indexPath(for: cell) else {
-            return
-        }
-        
-        let selectedMovie = movies[indexPath.row]
-        selectedMovie.changeSelectionStatus()
-        
-        MovieManager.shared.add(selectedMovie)
-        
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+//        if searchText.isEmpty {
+//            isSearchActive = false
+//        } else {
+//            isSearchActive = true
+//            filteredMovies = movies.filter({ movie in
+//                movie.title.lowercased().contains(searchText.lowercased())
+//            })
+//        }
+//        tableView.reloadData()
     }
 }
