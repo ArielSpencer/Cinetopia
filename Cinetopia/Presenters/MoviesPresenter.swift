@@ -8,6 +8,7 @@
 import UIKit
 
 protocol MoviesPresenterToViewControllerProtocol: AnyObject {
+    func setViewController(_ viewController: MoviesViewControllerToPresenterProtocol)
     func viewDidLoad()
     func viewDidAppear()
 }
@@ -19,8 +20,16 @@ protocol MoviesPresenterToViewProtocol: AnyObject {
 }
 
 class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
+
+    // MARK: Attributes
+    
+    private var controller: MoviesViewControllerToPresenterProtocol?
     
     // MARK: - MoviesPresenterToViewControllerProtocol
+    
+    func setViewController(_ viewController: any MoviesViewControllerToPresenterProtocol) {
+        self.controller = viewController
+    }
     
     func viewDidLoad() {
         <#code#>
