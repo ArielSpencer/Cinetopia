@@ -5,11 +5,17 @@
 //  Created by Ariel Spencer on 23/12/24.
 //
 
-import Foundation
+import UIKit
 
 protocol MoviesPresenterToViewControllerProtocol: AnyObject {
     func viewDidLoad()
     func viewDidAppear()
+}
+
+protocol MoviesPresenterToViewProtocol: AnyObject {
+    func didSelect(movie: Movie)
+    func didSelectFavoriteButton(_ movie: Movie)
+    func didSearchText(_ searchBar: UISearchBar, textDidChange searchText: String, _ movies: [Movie], _ filteredMovies: [Movie])
 }
 
 class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
@@ -23,4 +29,20 @@ class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
     func viewDidAppear() {
         <#code#>
     }
+}
+
+extension MoviesPresenter: MoviesPresenterToViewProtocol {
+    func didSelect(movie: Movie) {
+        <#code#>
+    }
+    
+    func didSelectFavoriteButton(_ movie: Movie) {
+        <#code#>
+    }
+    
+    func didSearchText(_ searchBar: UISearchBar, textDidChange searchText: String, _ movies: [Movie], _ filteredMovies: [Movie]) {
+        <#code#>
+    }
+    
+    
 }

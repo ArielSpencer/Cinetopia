@@ -22,6 +22,8 @@ class MoviesView: UIView {
     private var filteredMovies: [Movie] = []
     private var isSearchActive: Bool = false
     private var movies: [Movie] = []
+    
+    private var presenter: MoviesPresenterToViewProtocol?
 
     // MARK: - UI Components
     
