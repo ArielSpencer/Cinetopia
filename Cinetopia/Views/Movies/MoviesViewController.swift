@@ -13,12 +13,22 @@ protocol MoviesViewControllerToPresenterProtocol: AnyObject {
 
 class MoviesViewController: UIViewController {
     
-    private let movieService: MovieService = MovieService()
+    private var movieService: MovieService = MovieService()
+    private var presenter: MoviesPresenterToViewControllerProtocol?
     
     private lazy var mainView: MoviesView = {
         let mainView = MoviesView()
         return mainView
     }()
+    
+    init(presenter: MoviesPresenterToViewControllerProtocol) {
+        super.init(nibName: "", bundle: nil)
+        self.presenter = presenter
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = mainView
@@ -38,7 +48,7 @@ class MoviesViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tableView.reloadData()
+        presenter?.viewDidAppear()
     }
     
     @objc private func hideKeyboard() {
@@ -48,7 +58,7 @@ class MoviesViewController: UIViewController {
     private func fetchMovies() async {
         do {
             let movies = try await movieService.getMovies()
-            tableView.reloadData()
+//            tableView.reloadData()
         } catch (let error) {
             print(error)
         }
