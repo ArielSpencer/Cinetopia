@@ -16,7 +16,7 @@ protocol MoviesPresenterToViewControllerProtocol: AnyObject {
 protocol MoviesPresenterToViewProtocol: AnyObject {
     func didSelect(movie: Movie)
     func didSelectFavoriteButton(_ movie: Movie)
-    func didSearchText(_ searchBar: UISearchBar, textDidChange searchText: String, _ movies: [Movie], _ filteredMovies: [Movie])
+    func didSearchText(_ searchBar: UISearchBar, textDidChange searchText: String, _ movies: [Movie], _ filteredMovies: inout [Movie])
 }
 
 class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
@@ -73,9 +73,14 @@ extension MoviesPresenter: MoviesPresenterToViewProtocol {
         
     }
     
-    func didSearchText(_ searchBar: UISearchBar, textDidChange searchText: String, _ movies: [Movie], _ filteredMovies: [Movie]) {
-        
+    func didSearchText(_ searchBar: UISearchBar, textDidChange searchText: String, _ movies: [Movie], _ filteredMovies: inout [Movie]) {
+        if searchText.isEmpty {
+            view?.toggle(false)
+        } else {
+            view?.toggle(true)
+            filteredMovies = movies.filter({ movie in
+                movie.title.lowercased().contains(searchText.lowercased())
+            })
+        }
     }
-    
-    
 }

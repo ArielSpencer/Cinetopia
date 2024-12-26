@@ -69,20 +69,6 @@ class MoviesViewController: UIViewController {
 
 }
 
-extension MoviesViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText.isEmpty {
-//            isSearchActive = false
-//        } else {
-//            isSearchActive = true
-//            filteredMovies = movies.filter({ movie in
-//                movie.title.lowercased().contains(searchText.lowercased())
-//            })
-//        }
-//        tableView.reloadData()
-    }
-}
-
 extension MoviesViewController: MoviesViewControllerToPresenterProtocol {
     func didSelectMovie(_ movie: Movie) {
         let detailsVC = MovieDetailsViewController(movie: movie)

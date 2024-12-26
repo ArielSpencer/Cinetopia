@@ -43,7 +43,7 @@ class MoviesView: UIView {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.placeholder = "Pesquisar"
         searchBar.searchTextField.backgroundColor = .white
-//        searchBar.delegate = self
+        searchBar.delegate = self
         return searchBar
     }()
     
@@ -151,6 +151,11 @@ extension MoviesView: MoviesViewProtocol {
     func toggle(_ isActive: Bool) {
         self.isSearchActive = isActive
     }
-    
-    
+}
+
+extension MoviesView: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter?.didSearchText(searchBar, textDidChange: searchText, movies, &filteredMovies)
+        tableView.reloadData()
+    }
 }
