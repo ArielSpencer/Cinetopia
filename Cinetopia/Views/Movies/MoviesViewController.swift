@@ -32,6 +32,7 @@ class MoviesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.setViewController(self)
         presenter?.viewDidLoad()
         setupNavigationBar()
         

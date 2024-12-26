@@ -66,7 +66,7 @@ class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
 
 extension MoviesPresenter: MoviesPresenterToViewProtocol {
     func didSelect(movie: Movie) {
-        
+        controller?.didSelectMovie(movie)
     }
     
     func didSelectFavoriteButton(_ movie: Movie) {
