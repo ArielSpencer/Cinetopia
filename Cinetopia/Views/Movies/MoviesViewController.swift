@@ -13,16 +13,12 @@ protocol MoviesViewControllerToPresenterProtocol: AnyObject {
 
 class MoviesViewController: UIViewController {
     
-    private var movieService: MovieService = MovieService()
     private var presenter: MoviesPresenterToViewControllerProtocol?
+    private var mainView: MoviesView?
     
-    private lazy var mainView: MoviesView = {
-        let mainView = MoviesView()
-        return mainView
-    }()
-    
-    init(presenter: MoviesPresenterToViewControllerProtocol) {
+    init(view: MoviesView, presenter: MoviesPresenterToViewControllerProtocol) {
         super.init(nibName: "", bundle: nil)
+        self.mainView = view
         self.presenter = presenter
     }
     
@@ -36,10 +32,8 @@ class MoviesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.viewDidLoad()
         setupNavigationBar()
-        Task {
-            await fetchMovies()
-        }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -52,16 +46,7 @@ class MoviesViewController: UIViewController {
     }
     
     @objc private func hideKeyboard() {
-        searchBar.resignFirstResponder()
-    }
-    
-    private func fetchMovies() async {
-        do {
-            let movies = try await movieService.getMovies()
-//            tableView.reloadData()
-        } catch (let error) {
-            print(error)
-        }
+//        searchBar.resignFirstResponder()
     }
     
     private func setupNavigationBar() {
@@ -69,7 +54,7 @@ class MoviesViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.setHidesBackButton(true, animated: true)
-        navigationItem.titleView = mainView.searchBar
+        navigationItem.titleView = mainView?.searchBar
     }
 
     /*

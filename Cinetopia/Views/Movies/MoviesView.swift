@@ -135,7 +135,9 @@ extension MoviesView: MoviesViewProtocol {
     }
     
     func reloadData() {
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func navigateMovieDetail(with movie: Movie) {
