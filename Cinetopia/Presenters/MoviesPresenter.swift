@@ -48,7 +48,7 @@ class MoviesPresenter: MoviesPresenterToViewControllerProtocol {
     }
     
     func viewDidAppear() {
-        
+        view?.reloadData()
     }
     
     // MARK: - Class methods
@@ -70,7 +70,8 @@ extension MoviesPresenter: MoviesPresenterToViewProtocol {
     }
     
     func didSelectFavoriteButton(_ movie: Movie) {
-        
+        movie.changeSelectionStatus()
+        MovieManager.shared.add(movie)
     }
     
     func didSearchText(_ searchBar: UISearchBar, textDidChange searchText: String, _ movies: [Movie], _ filteredMovies: inout [Movie]) {

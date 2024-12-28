@@ -116,10 +116,8 @@ extension MoviesView: MovieTableViewCellDelegate {
         }
         
         let selectedMovie = movies[indexPath.row]
-        selectedMovie.changeSelectionStatus()
-        
-        MovieManager.shared.add(selectedMovie)
-        
+
+        presenter?.didSelectFavoriteButton(selectedMovie)
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
